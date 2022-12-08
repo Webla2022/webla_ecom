@@ -26,6 +26,7 @@ User.create = (newUser, result) => {
                 message: 'User already exists with email'
             }
             result(err, null);
+            return;
         } else {
             bcrypt.hash(newUser.password, saltRounds, function(err, hash) {
                 if(!err) {
@@ -35,6 +36,7 @@ User.create = (newUser, result) => {
                             return;
                         }
                         result(null, 'created user successfully');
+                        return;
                     });
                 }
             });
@@ -53,6 +55,7 @@ User.login = (user, result) => {
                 message: 'Invalid username or password'
             }
             result(err, null);
+            return;
         } else {
             const userData = res[0];
             const passwordHash = userData.password;
@@ -60,12 +63,14 @@ User.login = (user, result) => {
             bcrypt.compare(user.password, passwordHash, function(err,  isPasswordMatched) {  
                if(!isPasswordMatched || err) {
                  result({message: 'Invalid password for this email'}, null);
+                 return;
                }
                const token = jwt.sign({id: userId}, config.secret);
                userData['token'] = token;
                delete userData['password'];
                delete userData['id'];
                result(null, res[0]);
+               return;
             });
         }
     });

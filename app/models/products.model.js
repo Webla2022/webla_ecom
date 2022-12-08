@@ -20,8 +20,10 @@ Product.getProducts = (id, result) => {
              product.images = product.images.split('|');
             });
             result(null, res);
+            return;
         } else {
             result({message: 'No Products found'}, null);
+            return;
         }
     });
 }

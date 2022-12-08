@@ -12,6 +12,7 @@ Cart.addProduct = (cartId, productData, result) => {
         return;
       }
       result(null, {success: true, message: "Product added to cart successfully"});
+      return;
     });
 }
 
@@ -22,6 +23,7 @@ Cart.deleteProductFromCart = (cartId, productId, result) => {
         return;
       }
       result(null, {success: true, message: "Product removed from cart successfully"});
+      return;
     });
 }
 
@@ -34,8 +36,10 @@ Cart.getProductsFromCart = (cartId, result) => {
       }
       if(res && res.length > 0) {
         result(null, res);
+        return;
       } else {
         result({message: 'No productd added cart'}, null);
+        return;
       }
     });
 }
